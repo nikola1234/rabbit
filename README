@@ -1,0 +1,25 @@
+
+1. 代码编译
+    cd rabbitLmU/
+    mkdir build
+    cd build/
+    cmake ..
+    make
+
+    ./rabbit
+
+2. add for own
+    src/xxxSwU
+    src/xxxSwU/src
+    src/xxxSwU/inc
+    src/xxxSwU/CMakeLists.txt
+
+
+3. C++ 学习
+
+    1. 数据结构
+    2. 算法
+    3. 模板
+    4. 设计模式
+
+    开源代码看看

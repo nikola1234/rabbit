@@ -1,0 +1,9 @@
+set(CMAKE_VERSION 3.22.1)
+
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -fno-omit-frame-pointer -O0  -std=c++17")
+
+set(CMAKE_CXX_FLAGS_DEBUG "-g")
+
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+
+set(REPOROOT ${CMAKE_CURRENT_LIST_DIR}/..)
