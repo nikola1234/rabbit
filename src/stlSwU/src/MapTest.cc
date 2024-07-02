@@ -1,7 +1,6 @@
 #include "MapTest.h"
 #include <iostream>
 
-
 void MapTest::testrun(void)
 {
     std::cout<< "Map run test" <<std::endl;
