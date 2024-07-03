@@ -1,9 +1,10 @@
 #include "MapTest.h"
+#include "Logging.h"
 #include <iostream>
 
 void MapTest::testrun(void)
 {
-    std::cout<< "Map run test" <<std::endl;
+    LOG_INFO << "Map run test";
 }
 
 bool runMaptest()

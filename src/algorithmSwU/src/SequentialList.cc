@@ -1,11 +1,10 @@
 #include "SequentialList.h"
-#include "logging.h"
-
+#include "Logging.h"
+#include <iostream>
 
 void SequentialList::testrun(void)
 {
-    logger l;
-    l.output("SequentialList run test");
+    LOG_INFO << "SequentialList run test";
 }
 
 bool runSequentialListTest()

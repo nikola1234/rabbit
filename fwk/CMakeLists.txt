@@ -4,7 +4,8 @@ cmake_minimum_required(VERSION ${CMAKE_VERSION})
 set(NAME fwk)
 
 set(${NAME}_SRC
-    src/logging.cc
+    src/Logging.cc
+    src/LogStream.cc
 )
 
 add_library(${NAME} ${${NAME}_SRC})
