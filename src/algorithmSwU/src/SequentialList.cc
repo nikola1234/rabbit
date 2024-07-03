@@ -15,5 +15,5 @@ bool runSequentialListTest()
 }
 
 namespace nm_SequentialListTest{
-    bool _ = runSequentialListTest();
+    //bool _ = runSequentialListTest();
 }

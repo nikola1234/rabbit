@@ -5,6 +5,7 @@ set(NAME stlSwU)
 
 set(${NAME}_SRC
     src/MapTest.cc
+    src/ObjConstructor.cc
 )
 
 add_library(${NAME} ${${NAME}_SRC})

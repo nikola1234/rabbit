@@ -15,5 +15,5 @@ bool runMaptest()
 }
 
 namespace nm_MapTest{
-    bool _=runMaptest();
+    //bool _=runMaptest();
 }
