@@ -5,6 +5,8 @@ set(NAME algorithmSwU)
 
 set(${NAME}_SRC
     src/SequentialList.cc
+    src/QuickSort.cc
+    src/InsertSort.cc
 )
 
 add_library(${NAME} ${${NAME}_SRC})

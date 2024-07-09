@@ -1,10 +1,15 @@
 #pragma once
 
-#include "noncopyable.h"
+#include "Noncopyable.h"
 #include <string>
 #include "Types.h"
 #include <assert.h>
 #include <string.h> // memcpy
+#include <vector>
+#include <map>
+#include <utility>
+#include <tuple>
+
 
 namespace detail
 {
@@ -13,18 +18,15 @@ namespace detail
   const int kLargeBuffer = 4000*1000;
 
   template<int SIZE>
-  class FixedBuffer : noncopyable
+  class FixedBuffer : Noncopyable
   {
   public:
-    FixedBuffer()
-      : cur_(data_)
-    {
-      setCookie(cookieStart);
-    }
+    FixedBuffer(): cur_(data_) {}
 
     ~FixedBuffer()
     {
-      setCookie(cookieEnd);
+      // TODO
+      bzero();
     }
 
     void append(const char* /*restrict*/ buf, size_t len)
@@ -46,28 +48,24 @@ namespace detail
     void add(size_t len) { cur_ += len; }
 
     void reset() { cur_ = data_; }
-    void bzero() { memZero(data_, sizeof data_); }
+    void bzero() { memZero(data_, sizeof data_); }  // memset with 0
 
     // for used by GDB
-    const char* debugString();
-    void setCookie(void (*cookie)()) { cookie_ = cookie; }
+    const char* debugString();  // how to use it by GDB?
     // for used by unit test
     string toString() const { return string(data_, length()); }
 
   private:
+    const char* begin() const {return data_ ;}  // TODO add it to support range for
     const char* end() const { return data_ + sizeof data_; }
-    // Must be outline function for cookies.
-    static void cookieStart();
-    static void cookieEnd();
 
-    void (*cookie_)();
     char data_[SIZE];
     char* cur_;
   };
 
 }  // namespace detail
 
-class LogStream : noncopyable
+class LogStream : Noncopyable
 {
   typedef LogStream self;
  public:
@@ -131,12 +129,80 @@ class LogStream : noncopyable
     return *this;
   }
 
+  template<typename T>
+  LogStream& operator<<(const std::vector<T>& v)
+  {
+    *this << '[';
+    bool first = true;
+    for (const auto & e: v)
+    {
+      if (!first) {
+          *this << ',';
+      }
+      *this << e;
+      first = false;
+    }
+    *this << ']';
+    return *this;
+  }
+
+  template<typename K, typename V>
+  LogStream& operator<<(const std::map<K, V>& m)
+  {
+    *this << '[';
+    bool first = true;
+    for (const auto& [key, value] : m)
+    {
+      if (!first) {
+          *this << ',';
+      }
+
+      *this << key << ":" << value;
+      first = false;
+    }
+    *this << ']';
+    return *this;
+  }
+
+  template<typename F, typename S>
+  LogStream& operator<<(const std::pair<F, S>& p)
+  {
+    *this << '(';
+    if (const auto& [first, second] = p; true)
+    {
+      *this << first << ":" << second;
+    } else {
+      *this << '-';
+    }
+
+    *this << ')';
+    return *this;
+  }
+
+  template<typename... Args>
+  LogStream& operator<<(const std::tuple<Args...>& t)
+  {
+    int size = static_cast<int>(sizeof...(Args));
+    if (size > 0)
+    {
+      std::apply([this,size](auto&&... args) {
+        int s  = size;
+        *this<< '(';
+        ((*this<< args << (s-- > 1 ? "," : "")), ...);
+        *this<< ')';
+      }, t);
+    } else {
+      *this << '-';
+    }
+      return *this;
+  }
+
+
   void append(const char* data, int len) { buffer_.append(data, len); }
   const Buffer& buffer() const { return buffer_; }
   void resetBuffer() { buffer_.reset(); }
 
  private:
-  void staticCheck();
 
   template<typename T>
   void formatInteger(T);
@@ -145,34 +211,3 @@ class LogStream : noncopyable
 
   static const int kMaxNumericSize = 48;
 };
-
-class Fmt // : noncopyable
-{
- public:
-  template<typename T>
-  Fmt(const char* fmt, T val);
-
-  const char* data() const { return buf_; }
-  int length() const { return length_; }
-
- private:
-  char buf_[32];
-  int length_;
-};
-
-inline LogStream& operator<<(LogStream& s, const Fmt& fmt)
-{
-  s.append(fmt.data(), fmt.length());
-  return s;
-}
-
-// Format quantity n in SI units (k, M, G, T, P, E).
-// The returned string is atmost 5 characters long.
-// Requires n >= 0
-std::string formatSI(int64_t n);
-
-// Format quantity n in IEC (binary) units (Ki, Mi, Gi, Ti, Pi, Ei).
-// The returned string is atmost 6 characters long.
-// Requires n >= 0
-std::string formatIEC(int64_t n);
-
