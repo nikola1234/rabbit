@@ -1,0 +1,11 @@
+syntax = "proto2";
+
+package test;
+
+message Request {
+    required int32 message_number = 1;
+    required int32 procedure_id = 2;
+    required bool need_confirm = 3;
+    required string name = 4;
+    repeated string parameter = 5;
+}

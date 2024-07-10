@@ -22,6 +22,7 @@ add_subdirectory(${SRC_DIR}/applicationSwU ${BIN_DIR}/applicationSwU)
 add_subdirectory(${SRC_DIR}/stlSwU ${BIN_DIR}/stlSwU)
 add_subdirectory(${SRC_DIR}/algorithmSwU ${BIN_DIR}/algorithmSwU)
 add_subdirectory(${FWK_DIR}/ ${BIN_DIR}/)
+add_subdirectory(${PROTO_DIR}/ ${BIN_DIR}/protoInterfaces)
 
 target_include_directories( ${NAME} PRIVATE
     inc
@@ -34,9 +35,11 @@ target_link_libraries( ${NAME} PRIVATE
     -Wl,--whole-archive
     ############## start ################
     fwk
+    protoInterface
     applicationSwU
     stlSwU
     algorithmSwU
+    protobuf
     #### add other SwU
 
     ############## end   ################

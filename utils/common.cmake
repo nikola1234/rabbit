@@ -10,4 +10,8 @@ set(REPOROOT ${CMAKE_CURRENT_LIST_DIR}/..)
 
 set(FWK_DIR ${REPOROOT}/fwk)
 
+set(PROTO_DIR ${REPOROOT}/proto)
+
+file(GLOB PROTO_FILES ${PROTO_DIR}/*.proto)
+
 #set(ENV{R_LOG_TRACE} "1")
