@@ -11,6 +11,7 @@
 #include <functional>
 #include <string>
 #include <map>
+#include "Logging.h"
 
 namespace O_O
 {
@@ -394,7 +395,7 @@ namespace O_O
                     event.data.fd = clientSocket;
                     epoll_ctl(m_epollFd, EPOLL_CTL_ADD, clientSocket, &event);
 
-                    std::cout << "New client connected" << std::endl;
+                    LOG_INFO << "New client connected";
                 }
                 else
                 {
@@ -403,7 +404,7 @@ namespace O_O
                     {
                         epoll_ctl(m_epollFd, EPOLL_CTL_DEL, m_events[i].data.fd, nullptr);
                         close(m_events[i].data.fd);
-                        std::cout << "Client disconnected" << std::endl;
+                        LOG_INFO <<  "Client disconnected";
                         m_socketFdAddressMap.erase(m_events[i].data.fd);
                         m_disconnectedFunc(m_events[i].data.fd);
                     }

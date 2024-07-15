@@ -13,13 +13,13 @@ int main()
     client.start();
     {
         auto rt = client.rpcCall<int>("AAA", std::string("ABC"), int(123), std::vector<int>{1, 2, 3}, std::vector<std::string>{"DDD", "EEE"}, true);
-        std::cout << rt << std::endl;
+        LOG_INFO << rt;
     }
     {
         auto rt = client.rpcCall<std::vector<std::string>>("BBB");
         for(auto i:rt)
         {
-            std::cout<<i<<std::endl;
+            LOG_INFO << i;
         }
     }
     return 0;

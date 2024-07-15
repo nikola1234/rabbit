@@ -10,23 +10,15 @@ int main()
     O_O::RpcMessageHandler handler;
     std::function<int(std::string, int, std::vector<int>, std::vector<std::string>, bool)> callbackAAA = [](std::string a, int b, std::vector<int> c, std::vector<std::string> d, bool e)
     {
-        std::cout << "First: " << a << " Second: " << b << std::endl;
-        std::cout << "Third: " << std::endl;
-        for (auto i : c)
-        {
-            std::cout << i << " " << std::endl;
-        }
-        for (auto i : d)
-        {
-            std::cout << i << " " << std::endl;
-        }
-        std::cout << e << std::endl;
+        LOG_INFO << "First: " << a;
+        LOG_INFO << "Second: " << b;
+        LOG_INFO << "Third: " << c << " - " <<d <<" - "<< e;
         return 123;
     };
     handler.registerCallback("AAA", callbackAAA);
     std::function<std::vector<std::string>(void)> callbackBBB = []()
     {
-        std::cout << "BBB Called" << std::endl;
+        LOG_INFO <<"BBB Called";
         return std::vector<std::string>{"AA","BB"};
     };
     handler.registerCallback("BBB", callbackBBB);
