@@ -17,10 +17,7 @@ int main()
     }
     {
         auto rt = client.rpcCall<std::vector<std::string>>("BBB");
-        for(auto i:rt)
-        {
-            LOG_INFO << i;
-        }
+        LOG_INFO << rt;
     }
     return 0;
 }

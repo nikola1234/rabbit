@@ -23,7 +23,9 @@ int main()
     };
     handler.registerCallback("BBB", callbackBBB);
 
-    O_O::TcpServer server(8080, std::bind(&O_O::RpcMessageHandler::handleSocketData, &handler, std::placeholders::_1, std::placeholders::_2), std::bind(&O_O::RpcMessageHandler::handleDisconnect, &handler, std::placeholders::_1));
+    O_O::TcpServer server(8080,
+                          std::bind(&O_O::RpcMessageHandler::handleSocketData, &handler, std::placeholders::_1, std::placeholders::_2),
+                          std::bind(&O_O::RpcMessageHandler::handleDisconnect, &handler, std::placeholders::_1));
     server.run();
 
     return 0;

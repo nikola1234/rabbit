@@ -73,7 +73,10 @@ class LogStream : Noncopyable
 
   self& operator<<(bool v)
   {
-    buffer_.append(v ? "1" : "0", 1);
+
+    //buffer_.append(v ? "1" : "0", 1);
+    //return *this;
+    v? *this << "TRUE" : *this << "FALSE";
     return *this;
   }
 
