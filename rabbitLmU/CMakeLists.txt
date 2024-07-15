@@ -3,8 +3,13 @@ include(../utils/common.cmake)
 cmake_minimum_required(VERSION ${CMAKE_VERSION})
 
 set(NAME rabbit)
+set(ZNAME_SERVER zserver)
+set(ZNAME_CLIENT zclient)
 
 add_executable(${NAME} app.cc)
+
+add_executable(${ZNAME_SERVER} app.cc)
+add_executable(${ZNAME_CLIENT} app.cc)
 
 set(SRC_DIR ${REPOROOT}/src)
 set(BIN_DIR ${CMAKE_BINARY_DIR}/bin/) #build/bin
@@ -23,6 +28,8 @@ add_subdirectory(${SRC_DIR}/stlSwU ${BIN_DIR}/stlSwU)
 add_subdirectory(${SRC_DIR}/algorithmSwU ${BIN_DIR}/algorithmSwU)
 add_subdirectory(${FWK_DIR}/ ${BIN_DIR}/)
 add_subdirectory(${PROTO_DIR}/ ${BIN_DIR}/protoInterfaces)
+add_subdirectory(${SRC_DIR}/zhangMessageSwU/client ${BIN_DIR}/zhangMessageSwU/client)
+add_subdirectory(${SRC_DIR}/zhangMessageSwU/server ${BIN_DIR}/zhangMessageSwU/server)
 
 target_include_directories( ${NAME} PRIVATE
     inc
@@ -45,4 +52,38 @@ target_link_libraries( ${NAME} PRIVATE
     ############## end   ################
     -Wl,--no-whole-archive
 )
+
+target_include_directories( ${ZNAME_SERVER} PRIVATE
+    inc
+    ${REPOROOT}/fwk/inc
+)
+
+target_link_libraries( ${ZNAME_SERVER} PRIVATE
+    -Wl,--whole-archive
+    ############## start ################
+    fwk
+    protoInterface
+    zhangMessageSSwU
+    protobuf
+    ############## end   ################
+    -Wl,--no-whole-archive
+)
+
+target_include_directories( ${ZNAME_CLIENT} PRIVATE
+    inc
+    ${REPOROOT}/fwk/inc
+)
+
+target_link_libraries( ${ZNAME_CLIENT} PRIVATE
+    -Wl,--whole-archive
+    ############## start ################
+    fwk
+    protoInterface
+    zhangMessageCSwU
+    protobuf
+    ############## end   ################
+    -Wl,--no-whole-archive
+)
+
+
 

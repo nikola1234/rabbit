@@ -1,21 +1,6 @@
-syntax = "proto3";
+syntax = "proto2";
 
 package base;
-message ConnectionEstablishReq {
-    int32 version = 1;
-}
-
-message ConnectionEstablishCfm {
-}
-
-message ConnectionEstablishRej {
-    int32 error_no = 1;
-}
-
-enum MessageType {
-    REQUEST = 0;
-    CONFIRM = 1;
-}
 
 message BasicValueType {
     oneof value {
@@ -37,15 +22,15 @@ message ParameterType {
 }
 
 message Request {
-    int32 message_number = 1;
-    int32 procedure_id = 2;
-    bool need_confirm = 3;
-    string name = 4;
+    optional int32 message_number = 1;
+    optional int32 procedure_id = 2;
+    optional bool need_confirm = 3;
+    optional string name = 4;
     repeated ParameterType parameter = 5;
 }
 
 message Confirm {
-    int32 message_number = 1;
-    int32 procedure_id = 2;
-    string result = 3;
+    optional int32 message_number = 1;
+    optional int32 procedure_id = 2;
+    optional ParameterType result = 3;
 }
