@@ -8,6 +8,7 @@ set(${NAME}_SRC
     src/ObjConstructor.cc
     src/MoveTest.cc
     src/CommonTest.cc
+    src/TemplateSpecialization.cc
 )
 
 add_library(${NAME} ${${NAME}_SRC})

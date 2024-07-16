@@ -439,6 +439,7 @@ namespace O_O
         std::map<int, sockaddr_in> m_socketFdAddressMap;
     };
 
+
     // Client
     template <typename T>
     void setupParameter_(base::Request &request, T value)
