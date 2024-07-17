@@ -191,7 +191,7 @@ class LogStream : Noncopyable
       std::apply([this,size](auto&&... args) {
         int s  = size;
         *this<< '(';
-        ((*this<< args << (s-- > 1 ? "," : "")), ...);
+        (void) ((*this<< args << (s-- > 1 ? "," : "")), ...);
         *this<< ')';
       }, t);
     } else {

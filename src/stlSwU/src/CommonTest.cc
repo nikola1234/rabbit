@@ -83,6 +83,28 @@ public:
 	void doSomethingCommon(){};
 };
 
+//  逗号表达式
+template<typename T, typename... Ts>
+auto printf3(T value, Ts... args) {
+    LOG_INFO << value;
+    (void) std::initializer_list<T>{
+        ([&args] {LOG_INFO << args;}(), value)...
+    };
+    // (void) std::initializer_list<int>{1,2,3,4,5,6}; (void)忽略该表达式的结果
+}
+
+template<typename T, typename... Ts>
+auto printf4(T value, Ts... args) {
+    LOG_INFO << value;
+    (void) (([&args] {LOG_INFO << args;}()), ...);
+}
+
+template<typename T0, typename... T>
+void printf5(T0 t0, T... t) {
+    LOG_INFO << t0;
+    if constexpr (sizeof...(t) > 0) printf5(t...);
+}
+
 bool runCommonTest()
 {
     LOG_INFO << "CommonTest run test";
@@ -99,11 +121,16 @@ bool runCommonTest()
 
     // LOG_INFO << fibonacci(1);
 
+    // printf3(111, 123, "alpha", 1.2);
+    // printf4(111, 123, "alpha", 1.2);
+    // printf5(111, 123, "alpha", 1.2);
+
+
     //c++17 新特性 continue
 
     return true;
 }
 
 namespace nm_CommonTestt{
-     // bool _=runCommonTest();
+      bool _=runCommonTest();
 }
