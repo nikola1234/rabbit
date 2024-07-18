@@ -18,14 +18,15 @@ bool runThreadPoolTest()
             })
         );
     }
+    LOG_INFO << "ThreadPoolTest enqueue done";
 
     for(auto && result: results)
-        std::cout << result.get() << ' ';
+        std::cout << "----: " << result.get() << " ";  // // 阻塞，直到计算完成并获取结果
     std::cout << std::endl;
 
     return true;
 }
 
 namespace nm_ThreadPoolTest{
-      bool _=runThreadPoolTest();
+      // bool _=runThreadPoolTest();
 }
