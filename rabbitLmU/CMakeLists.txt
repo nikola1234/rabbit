@@ -24,6 +24,7 @@ set(BIN_DIR ${CMAKE_BINARY_DIR}/bin/) #build/bin
 
 # src
 add_subdirectory(${SRC_DIR}/applicationSwU ${BIN_DIR}/applicationSwU)
+add_subdirectory(${SRC_DIR}/othersSwU ${BIN_DIR}/othersSwU)
 add_subdirectory(${SRC_DIR}/stlSwU ${BIN_DIR}/stlSwU)
 add_subdirectory(${SRC_DIR}/algorithmSwU ${BIN_DIR}/algorithmSwU)
 add_subdirectory(${FWK_DIR}/ ${BIN_DIR}/)
@@ -34,6 +35,7 @@ add_subdirectory(${SRC_DIR}/zhangMessageSwU/server ${BIN_DIR}/zhangMessageSwU/se
 ####### Rabbit app#######
 target_include_directories( ${NAME} PRIVATE
     inc
+    ${REPOROOT}/src/othersSwU/inc
     ${REPOROOT}/src/stlSwU/inc
     ${REPOROOT}/src/algorithmSwU/inc
     ${REPOROOT}/fwk/inc
@@ -45,6 +47,7 @@ target_link_libraries( ${NAME} PRIVATE
     fwk
     protoInterface
     applicationSwU
+    othersSwU
     stlSwU
     algorithmSwU
     protobuf

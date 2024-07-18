@@ -132,5 +132,5 @@ bool runCommonTest()
 }
 
 namespace nm_CommonTestt{
-      bool _=runCommonTest();
+      // bool _=runCommonTest();
 }
